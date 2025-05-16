@@ -1,0 +1,80 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "text2mcp"
+version = "0.1.2"
+description = "Generate MCP services from natural language descriptions"
+readme = "README.md"
+authors = [
+    {name = "ooooofish", email = "ooooofish@126.com"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "uvicorn>=0.15.0",
+    "fastapi>=0.68.0",
+    "starlette>=0.14.2",
+    "pydantic>=1.8.2",
+    "toml>=0.10.2",
+    "python-dotenv>=0.19.0",
+    "openai>=1.0.0",
+    "mcp>=1.9.0",
+    "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "black>=21.5b2",
+    "isort>=5.9.1",
+    "mypy>=0.812",
+    "flake8>=3.9.2",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/whillhill/text2mcp"
+"Bug Tracker" = "https://github.com/whillhill/text2mcp/issues"
+
+[project.scripts]
+text2mcp = "text2mcp.cli.main:main"
+
+[tool.setuptools]
+packages = ["text2mcp"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+"text2mcp" = ["templates/*.md"]
+
+[tool.llm]
+api_key = "" # 设置为空，让用户自行配置
+model = "gpt-3.5-turbo"  # 默认模型
+# base_url = "https://api.example.com/v1"  # 可选，用于兼容OpenAI接口的其他服务
+
+[tool.black]
+line-length = 88
+target-version = ["py38"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
